@@ -1,5 +1,7 @@
 const { createApp } = Vue;
 
+const API = 'https://nahidaportfolio-backend.onrender.com'; 
+
 createApp({
   data() {
     return {
@@ -21,7 +23,6 @@ createApp({
   },
 
   watch: {
-    // Re-run reveal every time the filter changes
     activeCategory() {
       this.$nextTick(() => this.initReveal());
     }
@@ -29,24 +30,23 @@ createApp({
 
   methods: {
     async load() {
-  try {
-    const pRes = await fetch('api/projects');
-    if (!pRes.ok) throw new Error('No API');
-    const cRes = await fetch('api/categories');
-    const sRes = await fetch('api/skills');
-    this.projects   = await pRes.json();
-    this.categories = await cRes.json();
-    this.skills     = await sRes.json();
-  } catch {
-    // No Express server — use embedded data
-    this.projects   = PROJECTS;
-    this.categories = CATEGORIES;
-    this.skills     = SKILLS;
-  } finally {
-    this.loading = false;
-    this.$nextTick(() => this.initReveal());
-  }
-},
+      try {
+        const [pRes, cRes, sRes] = await Promise.all([
+          fetch(`${API}/api/projects`),
+          fetch(`${API}/api/categories`),
+          fetch(`${API}/api/skills`)
+        ]);
+        if (!pRes.ok) throw new Error('API unavailable');
+        this.projects   = await pRes.json();
+        this.categories = await cRes.json();
+        this.skills     = await sRes.json();
+      } catch (e) {
+        console.error('Could not reach API:', e);
+      } finally {
+        this.loading = false;
+        this.$nextTick(() => this.initReveal());
+      }
+    },
 
     open(project) {
       this.active = project;
@@ -59,7 +59,6 @@ createApp({
     },
 
     initReveal() {
-      // Immediately reveal already-visible items, then observe the rest
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
