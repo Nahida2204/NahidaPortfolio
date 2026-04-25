@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nahida Rojoa — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── NAVBAR ──────────────────────────────────────────── -->
+  <nav class="site-nav" :class="{ scrolled: scrolled }">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Nahida Rojoa</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="/assets/cv.pdf" target="_blank" class="nav-cv-btn">
+          <i class="bi bi-download"></i> Download CV
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-label">
+          <span class="label-dash"></span>
+          BSc Computer Science with Systems Engineering
+        </p>
+        <h1 class="hero-heading">
+          Nahida<br>
+          <span class="hero-name-accent">Rojoa</span>
+        </h1>
+        <p class="hero-desc">
+          Final-year Computer Science student at Middlesex University Mauritius, graduating July 2026.
+          Paasionate about AI, intelligent business systems, and process automation.
+        </p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-fill">View Projects</a>
+          <a href="/assets/cv.pdf" target="_blank" class="btn-outline">
+            <i class="bi bi-file-earmark-person"></i> Download CV
+          </a>
+          <a href="https://www.linkedin.com/in/nahida-rojoa-a24821270" target="_blank" class="btn-outline">
+            <i class="bi bi-linkedin"></i> LinkedIn
+          </a>
+        </div>
+        <div class="hero-tags">
+          <span class="hero-tag"><i class="bi bi-geo-alt"></i> Vacoas, Mauritius</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="linkedin-card">
+          <div class="qr-label">
+            <i class="bi bi-linkedin"></i>
+            Connect on LinkedIn
+          </div>
+          <div class="qr-wrap">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://www.linkedin.com/in/nahida-rojoa-a24821270&bgcolor=0f0d1a&color=a5b4fc&margin=10"
+              alt="LinkedIn QR Code"
+              class="qr-img"
+            >
+          </div>
+          <div class="qr-url">linkedin.com/in/nahida-rojoa</div>
+          <a href="https://www.linkedin.com/in/nahida-rojoa-a24821270" target="_blank" class="qr-link">
+            View Profile <i class="bi bi-arrow-up-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ───────────────────────────────────────────── -->
+  <section id="about" class="section">
+    <div class="wrap">
+      <div class="row g-5 align-items-start">
+        <div class="col-lg-4">
+          <p class="eyebrow">About</p>
+          <h2 class="sec-title">Background &<br>Approach</h2>
+        </div>
+        <div class="col-lg-8">
+          <p class="body-text">
+            I am a final-year BSc Computer Science with Systems Engineering student at Middlesex University Mauritius, graduating in July 2026. My academic work is complemented by practical experience across industry placements, where I have built and deployed systems that are actively used within real business environments.
+          </p>
+          <p class="body-text">
+            During my traineeship at Leal & Co Ltd, I worked within a structured problem-solving methodology — assess, design, construct, implement, and review — that shaped how I approach technical challenges. Applying this framework, I identified an operational bottleneck at Leal Bodyshop and developed it into my capstone project: an AI-powered Progressive Web Application using computer vision to automate vehicle damage assessment, a process previously done entirely by hand.
+          </p>
+          <p class="body-text">
+            My core interests are in artificial intelligence, intelligent business systems, and process automation — specifically how these technologies can be applied practically to improve real organisational workflows.
+          </p>
+
+          <div class="about-highlights">
+            <div class="highlight-item reveal-item">
+              <i class="bi bi-building"></i>
+              <div>
+                <div class="hi-title">Leal & Co Ltd</div>
+                <div class="hi-sub">Trainee · Business Intelligent Solutions Development · 2025–2026</div>
+              </div>
+            </div>
+            <div class="highlight-item reveal-item">
+              <i class="bi bi-building"></i>
+              <div>
+                <div class="hi-title">Dataxis</div>
+                <div class="hi-sub">Intern · Workflow Automation & Data Scraping · 2024–2025</div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ─────────────────────────────────────────── -->
+  <section id="projects" class="section section-alt">
+    <div class="wrap">
+      <div class="sec-header">
+        <p class="eyebrow">Projects</p>
+        <h2 class="sec-title">Selected Work</h2>
+      </div>
+
+      <div class="filter-row">
+        <button
+          v-for="cat in categories" :key="cat"
+          class="f-btn" :class="{ active: activeCategory === cat }"
+          @click="activeCategory = cat"
+        >{{ cat }}</button>
+      </div>
+
+      <div v-if="loading" class="loader-wrap">
+        <div class="loader"></div>
+      </div>
+
+      <div v-else class="proj-grid">
+        <div
+          v-for="(p, i) in filteredProjects" :key="p.id"
+          class="proj-card reveal-item"
+          :class="{ featured: p.highlight }"
+          @click="open(p)"
+        >
+          <div class="proj-img" :class="p.image ? 'has-image' : 'img-' + p.placeholder">
+            <img v-if="p.image" :src="p.image" :alt="p.title" class="proj-real-img">
+            <template v-else>
+              <div class="img-overlay"></div>
+              <div class="img-label">{{ p.category }}</div>
+            </template>
+          </div>
+
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="proj-tag">{{ p.tag }}</span>
+              <span class="proj-year">{{ p.year }}</span>
+            </div>
+            <h3 class="proj-title">{{ p.title }}</h3>
+            <p class="proj-desc">{{ p.description.substring(0, 130) }}...</p>
+            <div class="proj-pills">
+              <span v-for="t in p.tech.slice(0, 4)" :key="t" class="t-pill">{{ t }}</span>
+            </div>
+            <div class="proj-cta">
+              View Details <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ───────────────────────────────────────────── -->
+  <section id="skills" class="section">
+    <div class="wrap">
+      <div class="row g-5 align-items-start">
+        <div class="col-lg-4">
+          <p class="eyebrow">Skills</p>
+          <h2 class="sec-title">Technical<br>Expertise</h2>
+          <p class="body-text mt-3">Developed across three internships, a final-year capstone, and coursework covering systems engineering, AI, and data science.</p>
+        </div>
+        <div class="col-lg-8" v-if="skills">
+          <div class="skills-wrap">
+            <div class="skill-block reveal-item">
+              <div class="skill-label"><i class="bi bi-code-slash"></i> Languages</div>
+              <div class="s-pills">
+                <span v-for="s in skills.technical" :key="s" class="s-pill">{{ s }}</span>
+              </div>
+            </div>
+            <div class="skill-block reveal-item">
+              <div class="skill-label"><i class="bi bi-cpu"></i> AI & Data Science</div>
+              <div class="s-pills">
+                <span v-for="s in skills.ai" :key="s" class="s-pill">{{ s }}</span>
+              </div>
+            </div>
+            <div class="skill-block reveal-item">
+              <div class="skill-label"><i class="bi bi-lightning-charge"></i> Automation</div>
+              <div class="s-pills">
+                <span v-for="s in skills.automation" :key="s" class="s-pill">{{ s }}</span>
+              </div>
+            </div>
+            <div class="skill-block reveal-item">
+              <div class="skill-label"><i class="bi bi-tools"></i> Tools & Frameworks</div>
+              <div class="s-pills">
+                <span v-for="s in skills.tools" :key="s" class="s-pill">{{ s }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ──────────────────────────────────────────── -->
+  <section id="contact" class="section section-alt">
+    <div class="wrap">
+      <div class="row g-5 align-items-start">
+        <div class="col-lg-4">
+          <p class="eyebrow">Contact</p>
+          <h2 class="sec-title">Get in Touch</h2>
+          
+        </div>
+        <div class="col-lg-8">
+          <div class="contact-grid">
+            <a href="mailto:nahida.rojoa@gmail.com" class="c-item">
+              <div class="c-icon"><i class="bi bi-envelope"></i></div>
+              <div>
+                <div class="c-label">Email</div>
+                <div class="c-val">nahida.rojoa@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+23058115711" class="c-item">
+              <div class="c-icon"><i class="bi bi-telephone"></i></div>
+              <div>
+                <div class="c-label">Phone</div>
+                <div class="c-val">+230 5811 5711</div>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/nahida-rojoa-a24821270" target="_blank" class="c-item">
+              <div class="c-icon"><i class="bi bi-linkedin"></i></div>
+              <div>
+                <div class="c-label">LinkedIn</div>
+                <div class="c-val">nahida-rojoa-a24821270</div>
+              </div>
+            </a>
+            <div class="c-item">
+              <div class="c-icon"><i class="bi bi-geo-alt"></i></div>
+              <div>
+                <div class="c-label">Location</div>
+                <div class="c-val">Vacoas, Mauritius</div>
+              </div>
+            </div>
+            <a href="/assets/cv.pdf" target="_blank" class="c-item c-item-wide">
+              <div class="c-icon"><i class="bi bi-file-earmark-person"></i></div>
+              <div>
+                <div class="c-label">Curriculum Vitae</div>
+                <div class="c-val">Download PDF</div>
+              </div>
+              <i class="bi bi-download c-download-icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <div class="footer-name">Nahida Bibi Aisha Rojoa</div>
+        <div class="footer-sub">BSc Computer Science with Systems Engineering · Middlesex University Mauritius</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/nahida-rojoa-a24821270" target="_blank">
+          <i class="bi bi-linkedin"></i>
+        </a>
+        <a href="mailto:nahida.rojoa@gmail.com">
+          <i class="bi bi-envelope"></i>
+        </a>
+        <a href="/assets/cv.pdf" target="_blank">
+          <i class="bi bi-file-earmark-person"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MODAL ────────────────────────────────────────────── -->
+  <transition name="modal-fade">
+    <div class="modal-bg" v-if="active" @click.self="close">
+      <div class="modal-box">
+        <button class="modal-x" @click="close"><i class="bi bi-x-lg"></i></button>
+
+        <div class="modal-img" :class="active.image ? 'has-image' : 'img-' + active.placeholder">
+          <img v-if="active.image" :src="active.image" :alt="active.title" class="proj-real-img">
+          <template v-else>
+            <div class="img-overlay"></div>
+          </template>
+        </div>
+
+        <div class="modal-content-inner">
+          <div class="modal-meta">
+            <span class="proj-tag">{{ active.tag }}</span>
+            <span class="proj-year">{{ active.year }}</span>
+          </div>
+          <div class="modal-cat">{{ active.category }}</div>
+          <h2 class="modal-title">{{ active.title }}</h2>
+          <p class="modal-desc">{{ active.description }}</p>
+
+          <div class="modal-bullets">
+            <div v-for="b in active.bullets" :key="b" class="bullet-item">
+              <i class="bi bi-check2"></i>{{ b }}
+            </div>
+          </div>
+
+          <div class="modal-tech">
+            <span v-for="t in active.tech" :key="t" class="t-pill">{{ t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
