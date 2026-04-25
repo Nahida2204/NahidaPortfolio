@@ -29,22 +29,24 @@ createApp({
 
   methods: {
     async load() {
-      try {
-        const [pRes, cRes, sRes] = await Promise.all([
-          fetch('/api/projects'),
-          fetch('/api/categories'),
-          fetch('/api/skills')
-        ]);
-        this.projects   = await pRes.json();
-        this.categories = await cRes.json();
-        this.skills     = await sRes.json();
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.loading = false;
-        this.$nextTick(() => this.initReveal());
-      }
-    },
+  try {
+    const pRes = await fetch('api/projects');
+    if (!pRes.ok) throw new Error('No API');
+    const cRes = await fetch('api/categories');
+    const sRes = await fetch('api/skills');
+    this.projects   = await pRes.json();
+    this.categories = await cRes.json();
+    this.skills     = await sRes.json();
+  } catch {
+    // No Express server — use embedded data
+    this.projects   = PROJECTS;
+    this.categories = CATEGORIES;
+    this.skills     = SKILLS;
+  } finally {
+    this.loading = false;
+    this.$nextTick(() => this.initReveal());
+  }
+},
 
     open(project) {
       this.active = project;
